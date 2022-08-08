@@ -141,7 +141,7 @@ run2_nanoAOD_94X2016.toModify(isoForEle,
 ######################################ptRatioForEle#####################################
 ###import from hysicsTools/NanoAOD/pythonElectronJetVarProducer_cfi.py
 ptRatioRelForEle = cms.EDProducer("ElectronJetVarProducer",
-    srcJet = cms.InputTag("updatedJetsPuppi"),
+    srcJet = cms.InputTag("updatedJets"),
     srcLep = cms.InputTag("slimmedElectrons"),
     srcVtx = cms.InputTag("offlineSlimmedPrimaryVertices"),
 )
