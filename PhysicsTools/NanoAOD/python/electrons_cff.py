@@ -544,7 +544,7 @@ electronTablesTask = cms.Task(electronMVATTH, electronTable)
 electronMCTask = cms.Task(tautaggerForMatching, matchingElecPhoton, electronsMCMatchForTable, electronsMCMatchForTableAlt, electronMCTable)
 
 # Revert back to AK4 CHS jets for Run 2
-run2_nanoAOD_ANY.toModify(ptRatioRelForEle,srcJet="updatedJets")
+(run2_nanoAOD_ANY | ~run2_nanoAOD_ANY).toModify(ptRatioRelForEle,srcJet="updatedJets")
 
 
 #for NANO from reminAOD, no need to run slimmedElectronsUpdated, other modules of electron sequence will run on slimmedElectrons
