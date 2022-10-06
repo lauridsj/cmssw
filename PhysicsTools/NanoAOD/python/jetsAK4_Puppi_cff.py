@@ -103,6 +103,36 @@ jetPuppiTable = cms.EDProducer("SimpleCandidateFlatTableProducer",
     )
 )
 
+from PhysicsTools.PatAlgos.tools.jetTools import updateJetCollection
+def nanoAOD_addDeepInfoAK4Puppi(process,addDeepBTag,addDeepFlavour):
+    _btagDiscriminators=[]
+    if addDeepBTag:
+        print("Updating process to run DeepCSV btag")
+        _btagDiscriminators += ['pfDeepCSVJetTags:probb','pfDeepCSVJetTags:probbb','pfDeepCSVJetTags:probc']
+    if addDeepFlavour:
+        print("Updating process to run DeepFlavour btag")
+        _btagDiscriminators += ['pfDeepFlavourJetTags:probb','pfDeepFlavourJetTags:probbb','pfDeepFlavourJetTags:problepb','pfDeepFlavourJetTags:probc']
+    if len(_btagDiscriminators)==0: return process
+    print("Will recalculate the following discriminators: "+", ".join(_btagDiscriminators))
+    updateJetCollection(
+        process,
+        jetSource = cms.InputTag('slimmedJetsPuppi'),
+        jetCorrections = ('AK4PFPuppi', cms.vstring(['L1FastJet', 'L2Relative', 'L3Absolute','L2L3Residual']), 'None'),
+        btagDiscriminators = _btagDiscriminators,
+        postfix = 'WithDeepInfo',
+    )
+    process.load("Configuration.StandardSequences.MagneticField_cff")
+    process.jetPuppiCorrFactorsNano.src="selectedUpdatedPatJetsWithDeepInfo"
+    process.updatedJetsPuppi.jetSource="selectedUpdatedPatJetsWithDeepInfo"
+    return process
+
+nanoAOD_addDeepInfoAK4Puppi_switch = cms.PSet(
+    nanoAOD_addDeepBTag_switch = cms.untracked.bool(False),
+    nanoAOD_addDeepFlavourTag_switch = cms.untracked.bool(False),
+)
+
+run3_nanoAOD_122.toModify(nanoAOD_addDeepInfoAK4Puppi_switch, nanoAOD_addDeepFlavourTag_switch =  cms.untracked.bool(True))
+
 #jets are not as precise as muons
 jetPuppiTable.variables.pt.precision=10
 

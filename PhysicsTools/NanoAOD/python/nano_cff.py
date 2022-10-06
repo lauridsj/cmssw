@@ -262,6 +262,12 @@ def nanoAOD_customizeCommon(process):
         addDeepFlavour=nanoAOD_addDeepInfoAK4CHS_switch.nanoAOD_addDeepFlavourTag_switch
     )
 
+    # This function is defined in jetsAK4_Puppi_cff.py
+    process = nanoAOD_addDeepInfoAK4Puppi(process,
+        addDeepBTag=nanoAOD_addDeepInfoAK4Puppi_switch.nanoAOD_addDeepBTag_switch,
+        addDeepFlavour=nanoAOD_addDeepInfoAK4Puppi_switch.nanoAOD_addDeepFlavourTag_switch
+    )
+
     # This function is defined in jetsAK8_cff.py
     process = nanoAOD_addDeepInfoAK8(process,
         addDeepBTag=nanoAOD_addDeepInfoAK8_switch.nanoAOD_addDeepBTag_switch,
